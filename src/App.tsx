@@ -1,24 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import RenderCounter from './components/RenderCounter';
+import MyDialog from './components/MyDialog';
 import logo from './logo.svg';
 import './App.css';
+import DialogContainer from './components/DialogContainer';
 
 function App() {
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>App</h1>
+      <button onClick={() => setOpen(true)}>open</button>
+      <RenderCounter name="app"/>
+      {/* MyDialogはAppのopenが変わるたびにchildrenが更新されて非効率 */}
+      <MyDialog name="component" open={open} onClose={() => setOpen(false)}/>
+      {/* DialogContainerはopenを含んでいるので必要以上にre-renderされない */}
+      <DialogContainer name="container" />
     </div>
   );
 }
